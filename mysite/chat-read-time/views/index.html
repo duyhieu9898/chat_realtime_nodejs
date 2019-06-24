@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title></title>
+        <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="/assets/css/AdminLTE.min.css" />
+        <link rel="stylesheet" href="/assets/css/app.css">
+        <link
+            rel="stylesheet"
+            href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"
+        />
+        
+        <script src="/assets/js/jQuery-2.1.4.min.js"></script>
+        <script src="/assets/js/bootstrap.min.js"></script>
+        <script src="/assets/js/app.min.js"></script>
+    </head>
+    <body>
+        <div id="app">
+            <nav class="navbar navbar-light" role="navigation">
+                <div class="container">
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse navbar-ex1-collapse">
+                        
+                            <a class="navbar-brand" href="/">APP CHAT</a>
+                            
+                            <ul class="nav navbar-nav navbar-right user-info">
+                                <li class="dropdown ">
+                                    <a href="#" class="dropdown-toggle user-name" data-toggle="dropdown">Admin name <b class="caret"></b></a>
+                                    <ul class=" dropdown-menu box-border">
+                                        <li class="logout"><a href="#">Log out</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div><!-- /.navbar-collapse -->
+                </div>    
+            </nav>
+            <div class="container-fluid">
+                
+                
+                <!--content--> 
+                <div class="row " >
+
+                <!-- <div >
+                    <ul id="messages" v-for="(message, index) in messages">
+                    
+                    </ul>
+                    <form v-on:submit="send">
+                        <input type="text" v-model="message" />
+                        <button>submit</button>
+                    </form>
+                </div> -->
+            
+                
+                <!-- Construct the box with style you want. Here we are using box-danger-->
+                <!-- Then add the class direct-chat and choose the direct-chat-*
+                contexual class -->
+                <!-- The contextual class should match the box, so we
+                are using direct-chat-danger -->
+                <div class="col-md-3">
+                        <div class="box box-primary box-border">
+                            <div class="box-header">
+                                <h3 class="box-title">List Room</h3>
+                            </div><!-- /.box-header -->
+                        <div class="box-body no-padding">
+                            <table class="table table-striped">
+                                <tbody>
+                                    <tr>
+                                        <th style="width: 10px">Room</th>
+                                        <th>People in room</th>
+                                        <th style="width: 40px">Status</th>
+                                    </tr>
+                                    <tr class="rooms" v-for="(room, index) in rooms">
+
+                                        <td @click="joinRoom(index)"class="rooms--name">{{index}}</td>
+                                        <td>{{room.sockets.index}}</td>
+                                        
+                                        <td class="text-center"><i class="fa fa-circle text-center text-green">.</span></td>
+                                    </tr>
+                                    
+                                </tbody>
+                            </table>
+                            <div class="box-footer">
+                                <div class="input-group">
+                                    <input @keyup.enter="createRoom" v-model="newRoom" type="text" name="message" placeholder="Type Message ..." class="form-control"/>
+                                    <span class="input-group-btn">
+                                        <button @click="createRoom" type="button" class="btn btn-primary btn-flat">Create room</button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div><!-- /.box-body -->
+                    </div>
+                </div>
+                <div class="col-md-3 left-12_5" >
+                    <div class="box box-primary  box-border direct-chat direct-chat-primary ">
+                        <div class="box-header with-border">
+                            <h3 class="box-title" >{{inRoom}}</h3>
+                            <div class="box-tools pull-right">
+                                <span data-toggle="tooltip" title="3 New Messages" class="badge bg-light-blue">3</span>
+                                <button class="btn btn-box-tool" data-widget="collapse">
+                                    <i class="fa fa-minus"></i>
+                                </button>
+                                <!-- In box-tools add this button if you intend to use the
+                                        contacts pane -->
+                                <button class="btn btn-box-tool" data-toggle="tooltip" title="Contacts" data-widget="chat-pane-toggle">
+                                    <i class="fa fa-comments"></i>
+                                </button>
+                                <button class="btn btn-box-tool" data-widget="remove">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body" >
+                            <!-- Conversations are loaded here -->
+                            <div class="direct-chat-messages" >
+                                <!-- Message. Default to the left -->
+                                <div class="direct-chat-msg" class="messages" v-for="(message, index) in messages">
+                                    <div class="direct-chat-info clearfix">
+                                        <span class="direct-chat-name pull-left">Alexander Pierce</span>
+                                        <span class="direct-chat-timestamp pull-right">23 Jan 2:00 pm</span>
+                                    </div>
+                                    <!-- /.direct-chat-info -->
+                                    <img class="direct-chat-img" src="/assets/img/user1-128x128.jpg" alt="message user image" />
+                                    <!-- /.direct-chat-img -->
+                                    <div class="direct-chat-text">
+                                            {{ message }}
+                                    </div>
+                                    <!-- /.direct-chat-text -->
+                                </div>
+                            
+                                <!-- /.direct-chat-msg -->
+
+                                <!-- Message to the right -->
+                                <!-- <div class="direct-chat-msg right">
+                                    
+                                </div> -->
+                                <!-- /.direct-chat-msg -->
+                            </div>
+                            <!--/.direct-chat-messages-->
+
+                            <!-- Contacts are loaded here -->
+                            <div class="direct-chat-contacts">
+                                <ul class="contacts-list">
+                                    <li>
+                                        <a href="#">
+                                            <img class="contacts-list-img" src="/assets/img/user1-128x128.jpg" alt="Contact Avatar" />
+                                            <div class="contacts-list-info">
+                                                <span class="contacts-list-name">
+                                                    Count Dracula
+                                                    <small class="contacts-list-date pull-right">2/28/2015</small>
+                                                </span>
+                                                <span class="contacts-list-msg">How have you been? I was...</span
+                                                >
+                                            </div>
+                                            <!-- /.contacts-list-info -->
+                                        </a>
+                                    </li>
+                                    <!-- End Contact Item -->
+                                </ul>
+                                <!-- /.contatcts-list -->
+                            </div>
+                            <!-- /.direct-chat-pane -->
+                        </div>
+                        <!-- /.box-body -->
+                        <div class="box-footer">
+                            <div class="input-group">
+                                <input @keyup.enter="send" v-model="message" type="text" name="message" placeholder="Type Message ..." class="form-control"/>
+                                <span class="input-group-btn">
+                                    <button @click="send" type="button" class="btn btn-primary btn-flat">Send</button>
+                                </span>
+                            </div>
+                        </div>
+                        <!-- /.box-footer-->
+                    </div>
+                </div>
+                <div class="col-md-3 pull-right">
+                    <div class="box box-primary box-border">
+                        <div class="box-header">
+                            <h3 class="box-title">List User</h3>
+                        </div><!-- /.box-header -->
+                        <div class="box-body no-padding">
+                            <table class="table table-striped">
+                                <tbody>
+                                    <tr>
+                                        <th style="width: 10px">#</th>
+                                        <th>User</th>
+                                        <th style="width: 40px">Status</th>
+                                    </tr>
+                                    <tr class="users" v-for="(user, index) in users">
+                                        <td>{{index+1}}</td>
+                                        <td>{{user}}</td>
+                                        
+                                        <td class="text-center"><i class="fa fa-circle text-center text-green">.</span></td>
+                                    </tr>
+                                    
+                                </tbody>
+                            </table>
+                        </div><!-- /.box-body -->
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+        
+        
+        <!--/.direct-chat -->
+    </body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.5/socket.io.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.7/dist/vue.js"></script>
+
+    <script>
+        var socket = io();
+        new Vue({
+            el: "#app",
+            data: {
+                message: "",
+                messages: [],
+                users:[],
+                rooms:[],
+                newRoom:"",
+                inRoom:"Admin name",
+            },
+            created: function() {
+                socket.on(
+                    "chat.room",
+                    function(message) {
+                        this.messages.push(message);
+                        console.log(this);
+                    }.bind(this)
+                );
+                socket.on("users.connected",function(users){
+                    this.users=users;
+                }.bind(this));
+                socket.on("users.disconnected",function(users){
+                    this.users=users;
+                }.bind(this));
+                socket.on("rooms",function(rooms){
+                    this.rooms=rooms;
+                    
+                }.bind(this));
+                socket.on("user.inRoom",function(room){
+                    this.inRoom=room
+                    
+                }.bind(this));
+                socket.on("user.createRoom",function(room){
+                    this.inRoom=room
+                }.bind(this))
+            },
+            methods: {
+                send: function(e) {
+                    console.log("send");
+                    socket.emit("chat.message", this.message);
+                    this.message = "";
+                    e.preventDefault();
+                },
+                createRoom:function(){
+                    socket.emit("user.createRoom", this.newRoom);
+                    this.newRoom="";
+                    
+                    
+                },  
+                joinRoom(room) {
+                    socket.emit("user.room", room);
+                }
+            }
+        });
+    </script>
+</html>
